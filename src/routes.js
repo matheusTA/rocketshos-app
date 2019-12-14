@@ -1,7 +1,12 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-import Main from '~/pages/Main';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
 
-const Routes = createAppContainer(createSwitchNavigator({ Main }));
+const Routes = createAppContainer(createBottomTabNavigator({
+  Home,
+  Cart,
+}));
 
 export default Routes;
