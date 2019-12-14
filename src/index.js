@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Routes from '~/routes';
 import background from './assets/images/background.png';
+import Header from './components/Header';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +22,7 @@ const App = () => (
   >
     <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
     <Provider store={store}>
+      <Header />
       <Routes />
     </Provider>
   </ImageBackground>
