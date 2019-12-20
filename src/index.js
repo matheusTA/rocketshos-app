@@ -1,5 +1,5 @@
 import React from 'react';
-import '~/config/ReactotronConfig';
+import './config/ReactotronConfig';
 import 'react-native-gesture-handler';
 import { ImageBackground, StyleSheet, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
