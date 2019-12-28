@@ -28,11 +28,13 @@ export default function ProductList({ products }) {
 
           <ProductTitle>{item.title}</ProductTitle>
           <ProductPrice>{item.priceFormat}</ProductPrice>
+
           <ProductAddButton>
             <ProductAmount>
               <Icon name="add-shopping-cart" color="#FFF" size={20} />
               <ProductAmountText>0</ProductAmountText>
             </ProductAmount>
+
             <AddButtonText>ADICIONAR</AddButtonText>
           </ProductAddButton>
         </Product>
