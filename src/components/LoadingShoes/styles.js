@@ -13,6 +13,6 @@ export const LoadingText = styled.Text`
 `;
 
 export const ContainerLottier = styled(Lottie)`
-  width: 350px;
-  height: 350px;
+  width: 150px;
+  height: 150px;
 `;
