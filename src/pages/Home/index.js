@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text } from 'react-native';
 import api from '../../services/api';
 import LoadingShoes from '../../components/LoadingShoes';
+import ProductList from '../../components/ProductList';
 import { Container } from './styles';
+import { formatPrice } from '../../util/format';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,12 @@ export default function Home() {
   useEffect(() => {
     api.get('/products')
       .then((response) => {
-        setProducts(response.data);
+        const data = response.data.map((product) => ({
+          ...product,
+          priceFormat: formatPrice(product.price),
+        }));
+
+        setProducts(data);
         setLoading(false);
       })
       .catch();
@@ -19,8 +25,7 @@ export default function Home() {
 
   return (
     <Container>
-      {loading ? (<LoadingShoes loading={loading} />)
-        : (<Text>Olaasdfasd asd</Text>)}
+      {loading ? (<LoadingShoes loading={loading} />) : (<ProductList products={products} />)}
     </Container>
   );
 }
