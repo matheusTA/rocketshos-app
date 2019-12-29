@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 import { FlatList } from 'react-native';
+import Lottie from 'lottie-react-native';
 import Protypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -15,9 +16,11 @@ import {
   ProductAmount,
   ProductAmountText,
 } from './styles';
+import loadingAnimeted from '../../../loadingAnimeted.json';
 
 export default function ProductList({ products }) {
   const dispatch = useDispatch();
+  const loadingAddToCart = useSelector((state) => state.cart.loading);
   const amount = useSelector((state) => state.cart.products.reduce((sumAmount, product) => {
     sumAmount[product.id] = product.amount;
 
@@ -27,7 +30,7 @@ export default function ProductList({ products }) {
   return (
     <FlatList
       data={products}
-      keyExtractor={(product) => product.id}
+      keyExtractor={(product) => `${product.id}`}
       horizontal
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
@@ -44,8 +47,15 @@ export default function ProductList({ products }) {
               <Icon name="add-shopping-cart" color="#FFF" size={20} />
               <ProductAmountText>{amount[item.id] || 0}</ProductAmountText>
             </ProductAmount>
-
-            <AddButtonText>ADICIONAR</AddButtonText>
+            {loadingAddToCart
+              ? (
+                <Lottie
+                  source={loadingAnimeted}
+                  autoPlay={loadingAddToCart}
+                  loop={loadingAddToCart}
+                />
+              )
+              : (<AddButtonText>ADICIONAR</AddButtonText>)}
           </ProductAddButton>
         </Product>
       )}
