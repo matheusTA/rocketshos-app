@@ -1,7 +1,10 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { FlatList } from 'react-native';
 import Protypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Creators as CartActions } from '../../store/ducks/cart';
 import {
   Product,
   ProductImage,
@@ -14,6 +17,13 @@ import {
 } from './styles';
 
 export default function ProductList({ products }) {
+  const dispatch = useDispatch();
+  const amount = useSelector((state) => state.cart.products.reduce((sumAmount, product) => {
+    sumAmount[product.id] = product.amount;
+
+    return sumAmount;
+  }, {}));
+
   return (
     <FlatList
       data={products}
@@ -29,10 +39,10 @@ export default function ProductList({ products }) {
           <ProductTitle>{item.title}</ProductTitle>
           <ProductPrice>{item.priceFormat}</ProductPrice>
 
-          <ProductAddButton>
+          <ProductAddButton onPress={() => dispatch(CartActions.addCartRequest(item.id))}>
             <ProductAmount>
               <Icon name="add-shopping-cart" color="#FFF" size={20} />
-              <ProductAmountText>0</ProductAmountText>
+              <ProductAmountText>{amount[item.id] || 0}</ProductAmountText>
             </ProductAmount>
 
             <AddButtonText>ADICIONAR</AddButtonText>
