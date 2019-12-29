@@ -6,9 +6,11 @@ import produce from 'immer';
 export const { Types, Creators } = createActions({
   addCartRequest: ['id'],
   addCartSuccess: ['product'],
+  addCartError: [],
   removeCart: ['id'],
   updateAmountRequest: ['id', 'amount'],
   updateAmountSuccess: ['id', 'amount'],
+  updateAmountError: [],
 });
 
 const INITIAL_STATE = {
@@ -24,6 +26,10 @@ const addCartSuccess = (state = INITIAL_STATE, action) => produce(state, (draft)
   const { product } = action;
 
   draft.products.push(product);
+  draft.loading = false;
+});
+
+const addCartError = (state = INITIAL_STATE, action) => produce(state, (draft) => {
   draft.loading = false;
 });
 
@@ -45,12 +51,19 @@ const updateAmountSuccess = (state = INITIAL_STATE, action) => produce(state, (d
   if (productIndex >= 0) {
     draft.products[productIndex].amount = Number(action.amount);
   }
+  draft.loading = false;
+});
+
+const updateAmountError = (state = INITIAL_STATE, action) => produce(state, (draft) => {
+  draft.loading = false;
 });
 
 export default createReducer(INITIAL_STATE, {
   [Types.ADD_CART_REQUEST]: addCartRequest,
   [Types.ADD_CART_SUCCESS]: addCartSuccess,
+  [Types.ADD_CART_ERROR]: addCartError,
   [Types.REMOVE_CART]: removeCart,
   [Types.UPDATE_AMOUNT_REQUEST]: updateAmountRequest,
   [Types.UPDATE_AMOUNT_SUCCESS]: updateAmountSuccess,
+  [Types.UPDATE_AMOUNT_ERROR]: updateAmountError,
 });

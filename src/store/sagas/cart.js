@@ -17,6 +17,7 @@ export function* addToCart({ id }) {
 
   if (amount > stockAmount) {
     Alert.alert('Quantidade solicitada fora de estoque!');
+    yield put(CartActions.updateAmountError());
     return;
   }
 
@@ -43,6 +44,7 @@ export function* updateAmount({ id, amount }) {
 
   if (amount > stockAmount) {
     Alert.alert('Quantidade solicitada fora de estoque!');
+    yield put(CartActions.updateAmountError());
     return;
   }
 
